@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Los Muebles Hermanos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        main>div {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+
+        section {
+            margin-bottom: 25px;
+            padding: 15px;
+            border-left: 5px solid #0056b3;
+            background: #f9f9f9;
+        }
+
+        h2 {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        button {
+            cursor: pointer;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            margin-right: 10px;
+        }
+
+        #nav-admin-btn {
+            background-color: #4CAF50;
+        }
+
+        #nav-sales-btn {
+            background-color: #007BFF;
+        }
+
+        #crear-mueble-btn,
+        #crear-variante-btn,
+        #confirmar-venta-btn {
+            background-color: #28a745;
+        }
+
+        #add-to-carrito-btn {
+            background-color: #ffc107;
+            color: black;
+        }
+
+        #guardar-cotizacion-btn {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Los Muebles Hermanos</h1>
+        <button id="nav-admin-btn">Vista Administración</button>
+        <button id="nav-sales-btn">Vista Ventas y Cotización</button>
+        <hr>
+    </header>
+
+    <main>
+        <div id="admin-view">
+
+            <section>
+                <h2>Crear Nuevo Mueble</h2>
+                <p>Ingrese los datos para registrar un nuevo tipo de mueble en el catálogo.</p>
+                <div>
+                    <label for="nombre-mueble-input">Nombre del Mueble:</label>
+                    <input type="text" id="nombre-mueble-input" placeholder="Ej: Sillón Clásico"
+                        style="padding: 5px; margin-right: 10px;">
+                    <br><br>
+
+                    <label for="tipo-input">Tipo (Clasificación):</label>
+                    <input type="text" id="tipo-input" placeholder="Ej: Sillón, Silla, Mesa"
+                        style="padding: 5px; margin-right: 10px;">
+                    <br><br>
+
+                    <label for="material-select">Material:</label>
+                    <select id="material-select" style="padding: 5px; margin-right: 10px;">
+                        <option value="MADERA">Madera</option>
+                        <option value="METAL">Metal</option>
+                        <option value="PLASTICO">Plástico</option>
+                    </select>
+                    <br><br>
+
+                    <label for="tamano-select">Tamaño:</label>
+                    <select id="tamano-select" style="padding: 5px; margin-right: 10px;">
+                        <option value="PEQUENO">Pequeño</option>
+                        <option value="MEDIANO">Mediano</option>
+                        <option value="GRANDE">Grande</option>
+                    </select>
+                    <br><br>
+
+                    <label for="precio-base-input">Precio Base (CLP):</label>
+                    <input type="number" id="precio-base-input" placeholder="Ej: 50000" min="0"
+                        style="padding: 5px; margin-right: 10px;">
+                    <br><br>
+
+                    <label for="stock-input">Stock Inicial:</label>
+                    <input type="number" id="stock-input" placeholder="Ej: 10" min="0"
+                        style="padding: 5px; margin-right: 10px;">
+                    <br><br>
+
+                    <button id="crear-mueble-btn">Crear Mueble</button>
+                    <p id="mensaje-creacion-mueble" style="font-weight: bold;"></p>
+                </div>
+                <hr>
+            </section>
+
+            <section>
+                <h2>Listado y Stock de Muebles Existentes</h2>
+                <p>Muestra el estado actual del catálogo, incluyendo precios, material y stock.</p>
+
+                <button id="mostrar-muebles-btn">Cargar Catálogo Completo</button>
+
+                <div id="lista-muebles-container" style="border: 1px solid #ddd; padding: 10px; margin-top: 10px;">
+                    <p>Presione el botón para cargar la lista.</p>
+                </div>
+                <hr>
+            </section>
+
+            <section>
+                <h2>Crear Nueva Variante</h2>
+                <p>Permite registrar un nuevo material o estilo adicional.</p>
+                <div>
+                    <label for="descripcion-variante-input">Descripción:</label>
+                    <input type="text" id="descripcion-variante-input" placeholder="Ej: Tapiz Lino"
+                        style="padding: 5px; margin-right: 10px;">
+                    <br><br>
+
+                    <label for="precio-adicional-input">Precio Adicional (CLP):</label>
+                    <input type="number" id="precio-adicional-input" placeholder="Ej: 15000" min="0"
+                        style="padding: 5px; margin-right: 10px;">
+                    <br><br>
+
+                    <button id="crear-variante-btn">Crear Variante</button>
+                    <p id="mensaje-creacion-variante" style="font-weight: bold;"></p>
+                </div>
+                <hr>
+            </section>
+
+            <section>
+                <h2> Confirmar venta </h2>
+                <p>Ingrese el ID de la cotización guardada para confirmar la venta.</p>
+
+                <input type="number" id="id-cotizacion-input" placeholder="ID de Cotización"
+                    style="padding: 5px; margin-right: 10px;">
+
+                <button id="confirmar-venta-btn">Confirmar Venta</button>
+
+                <p id="mensaje-venta" style="font-weight: bold;"></p>
+            </section>
+
+            <section>
+                <h2>Cotizaciones confirmables</h2>
+                <p>Muestra las cotizaciones que no han sido confirmadas como venta.</p>
+
+                <button id="mostrar-cotizaciones-pendientes-btn">Cargar Cotizaciones</button>
+
+                <div id="lista-cotizaciones-container" style="border: 1px solid #ddd; padding: 10px; margin-top: 10px;">
+                    <p>Presione el botón para ver las cotizaciones pendientes.</p>
+                </div>
+
+                <div id="detalle-cotizacion-container"
+                    style="margin-top: 25px; padding: 15px; border: 2px solid #007bff; border-radius: 5px; display: none;">
+                    <h3>Detalle de Cotización #<span id="detalle-cotizacion-id"></span></h3>
+                    <p>Total: <strong id="detalle-cotizacion-total"></strong> | Fecha: <span
+                            id="detalle-cotizacion-fecha"></span></p>
+
+                    <h4>Muebles Incluidos:</h4>
+                    <div id="detalle-cotizacion-items">
+                    </div>
+                    <button onclick="document.getElementById('detalle-cotizacion-container').style.display='none';"
+                        style="margin-top: 15px; background-color: #dc3545; color: white;">Cerrar Detalle</button>
+                </div>
+            </section>
+        </div>
+
+        <div id="sales-view" style="display: none;">
+
+            <section>
+                <h2> Catálogo de Muebles </h2>
+                <p>Listado de muebles disponibles: Código, Nombre, Tipo, Tamaño, Precio Base.</p>
+                <button id="mostrar-muebles-ref-btn">Cargar Muebles</button>
+                <div id="muebles-referencia-container" style="border: 1px solid #ddd; padding: 10px; margin-top: 10px;">
+                    <p>Presione el botón para ver los muebles.</p>
+                </div>
+                <hr>
+            </section>
+
+            <section>
+                <h2> Catálogo de variantes </h2>
+                <p>Listado de variantes disponibles: Código, Descripción, Valor Agregado.</p>
+                <button id="mostrar-variantes-ref-btn">Cargar Variantes</button>
+                <div id="variantes-referencia-container"
+                    style="border: 1px solid #ddd; padding: 10px; margin-top: 10px;">
+                    <p>Presione el botón para ver las variantes.</p>
+                </div>
+                <hr>
+            </section>
+
+            <section>
+                <h2> Agregar Ítem a Cotización</h2>
+                <p>Utilice los códigos de referencia para ingresar un ítem a la cotización.</p>
+
+                <div>
+                    <label for="id-mueble-input-sales">Código del Mueble (ID): </label>
+                    <input type="number" id="id-mueble-input-sales" placeholder="Ej: 1" min="1"
+                        style="width: 70px; padding: 5px; margin-right: 10px;">
+                    <br><br>
+
+                    <label for="id-variante-input">Código de la Variante (ID): </label>
+                    <input type="number" id="id-variante-input" placeholder="Ej: 2" min="1"
+                        style="width: 70px; padding: 5px; margin-right: 10px;">
+                    <br><br>
+
+                    <label for="cantidad-cotizar-input">Cantidad:</label>
+                    <input type="number" id="cantidad-cotizar-input" value="1" min="1"
+                        style="width: 70px; padding: 5px; margin-right: 10px;">
+                    <br><br>
+
+                    <button id="add-to-carrito-btn" style="background-color: orange;">Añadir Ítem a Cotización</button>
+                    <p id="mensaje-cotizacion-item" style="font-weight: bold;"></p>
+                </div>
+                <hr>
+            </section>
+
+            <section>
+                <h2> Guardado de Cotización (<span id="item-count">0</span> ítems)</h2>
+                <div id="carrito-resumen">
+                    <p>Tu cotización está vacía.</p>
+                </div>
+
+                <button id="guardar-cotizacion-btn" disabled>GUARDAR COTIZACIÓN</button>
+                <p id="mensaje-cotizacion" style="font-weight: bold;"></p>
+            </section>
+        </div>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
