@@ -6,7 +6,7 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: muebles_hermanos
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - ./db/muebles_hermanos.sql:/docker-entrypoint-initdb.d/muebles_hermanos.sql
     networks:
@@ -32,7 +32,7 @@ services:
       context: ./Frontend
     container_name: muebles-frontend
     ports:
-      - "80:80"
+      - "8081:80"
     depends_on:
       - backend
     networks:
