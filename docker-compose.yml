@@ -1,0 +1,42 @@
+services:
+  mysql:
+    image: mysql:8
+    container_name: muebles-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: muebles_hermanos
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./db/muebles_hermanos.sql:/docker-entrypoint-initdb.d/muebles_hermanos.sql
+    networks:
+      - appnet
+
+  backend:
+    build:
+      context: ./Backend/Evaluacion3
+    container_name: muebles-backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/muebles_hermanos
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      - mysql
+    ports:
+      - "8080:8080"
+    networks:
+      - appnet
+
+  frontend:
+    build:
+      context: ./Frontend
+    container_name: muebles-frontend
+    ports:
+      - "8081:80"
+    depends_on:
+      - backend
+    networks:
+      - appnet
+
+networks:
+  appnet:
